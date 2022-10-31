@@ -10284,11 +10284,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\top\\Desktop\\TestApiJwt\\TestApiJwt\\TestApiJwt.csproj",
+      "projectUniqueName": "C:\\Users\\top\\Desktop\\TestApiJwt\\Secure-API-with-JWT\\TestApiJwt\\TestApiJwt.csproj",
       "projectName": "TestApiJwt",
-      "projectPath": "C:\\Users\\top\\Desktop\\TestApiJwt\\TestApiJwt\\TestApiJwt.csproj",
+      "projectPath": "C:\\Users\\top\\Desktop\\TestApiJwt\\Secure-API-with-JWT\\TestApiJwt\\TestApiJwt.csproj",
       "packagesPath": "C:\\Users\\top\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\top\\Desktop\\TestApiJwt\\TestApiJwt\\obj\\",
+      "outputPath": "C:\\Users\\top\\Desktop\\TestApiJwt\\Secure-API-with-JWT\\TestApiJwt\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

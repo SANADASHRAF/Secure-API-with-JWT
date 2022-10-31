@@ -1,4 +1,22 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TestApiJwt.Model;
+
 var builder = WebApplication.CreateBuilder(args);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//to map alues of key in appsetting with value of class JWT(in helper) 
+builder.Configuration.GetSection("JWT");
+//??? ????? ??? ?????? adintity 
+builder.Services.AddIdentity<Applicationuser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBcontext>();
+//add connection string
+builder.Services.AddDbContext<ApplicationDBcontext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+ );
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // Add services to the container.
 
@@ -7,8 +25,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Configuration.GetSection("JWT");
 
 var app = builder.Build();
 
