@@ -7,15 +7,17 @@ using TestApiJwt.Model;
 using TestApiJwt.services;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
-///////////////////////////////////////////////////////////////////////////////////////////////to use configration
-IConfiguration Configuration = app.Configuration;
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //to map alues of key in appsetting with value of class JWT(in helper) 
 builder.Configuration.GetSection("JWT");
-//??? ????? ??? ?????? adintity 
+// adintity services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddIdentity<Applicationuser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBcontext>();
 //add connection string
 builder.Services.AddDbContext<ApplicationDBcontext>(options =>
@@ -23,6 +25,10 @@ builder.Services.AddDbContext<ApplicationDBcontext>(options =>
  );
 //to use service in controller
 builder.Services.AddScoped<IuthoService, AuthService>();
+
+
+
+
 
 //defult conf of jwt 
 builder.Services.AddAuthentication(options =>
@@ -44,9 +50,9 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = Configuration["JWT:Issuer"],
-            ValidAudience = Configuration["JWT:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])) 
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])) 
         };
     });
 
@@ -62,7 +68,7 @@ builder.Services.AddSwaggerGen();
 
 
 
-
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
