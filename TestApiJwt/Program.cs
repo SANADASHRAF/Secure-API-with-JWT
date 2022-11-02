@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//to map alues of key in appsetting with value of class JWT(in helper) 
+//to map alues of key in appsetting with value of class JWT(in helper) (to use ioptions)
 builder.Configuration.GetSection("JWT");
 // adintity services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 

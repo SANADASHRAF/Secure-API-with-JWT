@@ -24,7 +24,7 @@ namespace TestApiJwt.services
 
         public  async Task<AuthModel> RegisterAsync(RegisterModel model)
         {
-            if (await _userManager.FindByEmailAsync(model.Email) is not null)
+            if (await _userManager.FindByEmailAsync (model.Email) is not null)
                 return new AuthModel { Message = "Email is already registered!" };
 
             if (await _userManager.FindByNameAsync(model.Username) is not null)
@@ -51,6 +51,7 @@ namespace TestApiJwt.services
             }
 
             await _userManager.AddToRoleAsync(user, "User");
+
             var jwtSecurityToken = await CreateJwtToken(user);
 
             return new AuthModel
@@ -62,6 +63,33 @@ namespace TestApiJwt.services
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Username = user.UserName
             };
+        }
+
+
+
+        public async Task<AuthModel> GetTokenAsync(LoginModel model)
+        {
+            var authModel = new AuthModel();
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
+            {
+                authModel.Message = "Email or Password is incorrect!";
+                return authModel;
+            }
+
+            var jwtSecurityToken = await CreateJwtToken(user);
+            var rolesList = await _userManager.GetRolesAsync(user);
+
+            authModel.IsAuthenticated = true;
+            authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            authModel.Email = user.Email;
+            authModel.Username = user.UserName;
+            authModel.ExpiresOn = jwtSecurityToken.ValidTo;
+            authModel.Roles = rolesList.ToList();
+
+            return authModel;
         }
 
 
@@ -94,7 +122,7 @@ namespace TestApiJwt.services
                 claims: claims,
                 expires: DateTime.Now.AddDays(_jwt.DurationInDays),
                 signingCredentials: signingCredentials);
-
+            
             return jwtSecurityToken;
         }
     }
